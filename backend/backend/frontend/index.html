@@ -179,6 +179,10 @@
 
       <button onclick="generateContent()">Generate Content</button>
 
+<button onclick="copyResult()" style="background: #222; margin-top: 12px;">
+  Copy Result
+</button>
+
       <div class="output" id="output">
         Your result will appear here...
       </div>
@@ -236,6 +240,17 @@
         output.textContent = "Backend connect नहीं हो रहा। API URL check करो।";
       }
     }
+    function copyResult() {
+  const output = document.getElementById("output").textContent;
+
+  if (!output || output.includes("Your result will appear")) {
+    alert("No result to copy.");
+    return;
+  }
+
+  navigator.clipboard.writeText(output);
+  alert("Result copied successfully!");
+}
   </script>
 </body>
 </html>
