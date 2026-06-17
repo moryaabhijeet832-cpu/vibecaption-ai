@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VibeCaption AI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #0f0f14;
+      color: white;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: auto;
+      padding: 30px 18px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 35px 10px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #c7c7c7;
+      font-size: 18px;
+    }
+
+    .card {
+      background: #181820;
+      border: 1px solid #2d2d38;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 7px;
+      color: #eeeeee;
+      font-weight: bold;
+    }
+
+    textarea,
+    select,
+    input {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      border: 1px solid #333344;
+      background: #101018;
+      color: white;
+      outline: none;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    button {
+      margin-top: 22px;
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ff3d7f, #7c4dff);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .output {
+      margin-top: 25px;
+      background: #101018;
+      border: 1px solid #333344;
+      border-radius: 18px;
+      padding: 20px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      color: #f1f1f1;
+      min-height: 120px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="hero">
+      <h1>VibeCaption AI</h1>
+      <p>Generate Instagram captions, hashtags, reel hooks and song suggestions instantly.</p>
+    </div>
+
+    <div class="card">
+      <label>Describe your photo/post</label>
+      <textarea id="photoIdea" placeholder="Example: Luxury cafe photo, black outfit, confident entrepreneur vibe"></textarea>
+
+      <div class="grid">
+        <div>
+          <label>Mood / Vibe</label>
+          <select id="mood">
+            <option>Luxury</option>
+            <option>Attitude</option>
+            <option>Romantic</option>
+            <option>Sad</option>
+            <option>Travel</option>
+            <option>Fitness</option>
+            <option>Business</option>
+            <option>Cinematic</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Language</label>
+          <select id="language">
+            <option>Hinglish</option>
+            <option>Hindi</option>
+            <option>English</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Post Type</label>
+          <select id="postType">
+            <option>Instagram Post</option>
+            <option>Instagram Reel</option>
+            <option>Instagram Story</option>
+            <option>Profile Bio</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Audience</label>
+          <input id="audience" placeholder="Example: Indian youth, fashion lovers" />
+        </div>
+      </div>
+
+      <button onclick="generateContent()">Generate Content</button>
+
+      <div class="output" id="output">
+        Your result will appear here...
+      </div>
+    </div>
+
+    <div class="footer">
+      Made for creators, influencers and social media pages.
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "PASTE_YOUR_RENDER_BACKEND_URL_HERE";
+
+    async function generateContent() {
+      const output = document.getElementById("output");
+
+      const photoIdea = document.getElementById("photoIdea").value.trim();
+      const mood = document.getElementById("mood").value;
+      const language = document.getElementById("language").value;
+      const postType = document.getElementById("postType").value;
+      const audience = document.getElementById("audience").value.trim();
+
+      if (!photoIdea) {
+        output.textContent = "Please describe your photo or post first.";
+        return;
+      }
+
+      output.textContent = "Generating...";
+
+      try {
+        const response = await fetch(`${API_URL}/generate`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            photoIdea,
+            mood,
+            language,
+            postType,
+            audience
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          output.textContent = data.error || "Something went wrong.";
+          return;
+        }
+
+        output.textContent = data.result;
+
+      } catch (error) {
+        output.textContent = "Backend connect नहीं हो रहा। API URL check करो।";
+      }
+    }
+  </script>
+</body>
+</html>
