@@ -136,7 +136,19 @@
     <div class="card">
       <label>Describe your photo/post</label>
       <textarea id="photoIdea" placeholder="Example: Luxury cafe photo, black outfit, confident entrepreneur vibe"></textarea>
+<label>Upload Photo (optional)</label>
+<input type="file" id="photoFile" accept="image/*" onchange="handleImageUpload(event)" />
 
+<div id="imagePreviewBox" style="display:none; margin-top: 12px;">
+  <img
+    id="imagePreview"
+    alt="Preview"
+    style="width: 100%; max-height: 260px; object-fit: cover; border-radius: 14px; border: 1px solid #333344;"
+  />
+  <button type="button" onclick="removeImage()" style="background: #222; margin-top: 10px;">
+    Remove Photo
+  </button>
+</div>
       <div class="grid">
         <div>
           <label>Mood / Vibe</label>
@@ -196,6 +208,43 @@
   <script>
     
 const API_URL = "https://vibecaption-ai.onrender.com";
+    let uploadedImageBase64 = "";
+let uploadedImageMimeType = "";
+
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  const previewBox = document.getElementById("imagePreviewBox");
+  const preview = document.getElementById("imagePreview");
+
+  if (!file) return;
+
+  if (file.size > 2.5 * 1024 * 1024) {
+    alert("Image size too large. Please upload an image smaller than 2.5MB.");
+    event.target.value = "";
+    return;
+  }
+
+  uploadedImageMimeType = file.type || "image/jpeg";
+
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    const dataUrl = e.target.result;
+    uploadedImageBase64 = dataUrl.split(",")[1];
+    preview.src = dataUrl;
+    previewBox.style.display = "block";
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function removeImage() {
+  uploadedImageBase64 = "";
+  uploadedImageMimeType = "";
+  document.getElementById("photoFile").value = "";
+  document.getElementById("imagePreview").src = "";
+  document.getElementById("imagePreviewBox").style.display = "none";
+}
     async function generateContent() {
       const output = document.getElementById("output");
 
@@ -205,9 +254,10 @@ const API_URL = "https://vibecaption-ai.onrender.com";
       const postType = document.getElementById("postType").value;
       const audience = document.getElementById("audience").value.trim();
 
-      if (!photoIdea) {
-        output.textContent = "Please describe your photo or post first.";
-        return;
+      if (!photoIdea && !uploadedImageBase64) {
+  output.textContent = "Please write something or upload a photo first.";
+  return;
+}
       }
 
       output.textContent = "Generating...";
@@ -219,12 +269,14 @@ const API_URL = "https://vibecaption-ai.onrender.com";
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            photoIdea,
-            mood,
-            language,
-            postType,
-            audience
-          })
+  photoIdea,
+  mood,
+  language,
+  postType,
+  audience,
+  imageBase64: uploadedImageBase64,
+  imageMimeType: uploadedImageMimeType
+})
         });
 
         const data = await response.json();
