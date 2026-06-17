@@ -79,6 +79,11 @@ Return output in this exact format:
 7. Call To Action:
 
 Rules:
+- Start directly with "1. Best Caption:"
+- Do not write any intro like "Here is the Instagram content".
+- Do not use markdown bold symbols like **.
+- Do not use backticks.
+- Keep section numbers exactly 1 to 7.
 - Make it natural, trendy and social-media friendly.
 - If image is available, use image details strongly.
 - If both image and text are given, combine both.
