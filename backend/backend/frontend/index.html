@@ -191,8 +191,26 @@
       <button onclick="generateContent()">Generate Content</button>
 
 <button onclick="copyResult()" style="background: #222; margin-top: 12px;">
-  Copy Result
+  Copy Full Result
 </button>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px;">
+  <button onclick="copyBestCaption()" style="background: #222; margin-top: 0;">
+    Copy Caption
+  </button>
+
+  <button onclick="copyHashtags()" style="background: #222; margin-top: 0;">
+    Copy Hashtags
+  </button>
+
+  <button onclick="copySongs()" style="background: #222; margin-top: 0;">
+    Copy Songs
+  </button>
+
+  <button onclick="copyReelHook()" style="background: #222; margin-top: 0;">
+    Copy Reel Hook
+  </button>
+</div>
 
       <div class="output" id="output">
         Your result will appear here...
@@ -304,6 +322,53 @@
     navigator.clipboard.writeText(output);
     alert("Result copied successfully!");
   }
+           function copySection(startNumber, endNumber, successMessage, errorMessage) {
+  const output = document.getElementById("output").textContent;
+
+  if (!output || output.includes("Your result will appear") || output.includes("Generating")) {
+    alert("No generated result found.");
+    return;
+  }
+
+  const startMarker = startNumber + ".";
+  const endMarker = endNumber ? endNumber + "." : null;
+
+  const startIndex = output.indexOf(startMarker);
+
+  if (startIndex === -1) {
+    alert(errorMessage);
+    return;
+  }
+
+  let endIndex = -1;
+
+  if (endMarker) {
+    endIndex = output.indexOf(endMarker, startIndex + startMarker.length);
+  }
+
+  const sectionText = endIndex === -1
+    ? output.slice(startIndex).trim()
+    : output.slice(startIndex, endIndex).trim();
+
+  navigator.clipboard.writeText(sectionText);
+  alert(successMessage);
+}
+
+function copyBestCaption() {
+  copySection(1, 2, "Best caption copied!", "Best caption not found.");
+}
+
+function copyHashtags() {
+  copySection(3, 4, "Hashtags copied!", "Hashtags not found.");
+}
+
+function copySongs() {
+  copySection(4, 5, "Song suggestions copied!", "Songs not found.");
+}
+
+function copyReelHook() {
+  copySection(5, 6, "Reel hook copied!", "Reel hook not found.");
+}
 </script>   
 </body>
 </html>
