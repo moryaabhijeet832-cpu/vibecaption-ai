@@ -18,144 +18,121 @@
     <meta property="og:url" content="https://vibecaption-ai-1.onrender.com
 
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+  * {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #0f0f14, #1b1028);
+    color: white;
+    min-height: 100vh;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 950px;
+    margin: auto;
+    padding: 30px 16px;
+  }
+
+  h1 {
+    font-size: 44px;
+    margin-bottom: 10px;
+    color: #ffffff;
+  }
+
+  p {
+    color: #d7d7d7;
+    font-size: 18px;
+  }
+
+  label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  textarea,
+  input,
+  select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    background: #171722;
+    color: white;
+    font-size: 16px;
+    outline: none;
+  }
+
+  textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+
+  input[type="file"] {
+    background: transparent;
+    border: 1px dashed #555;
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #7c3aed;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #6d28d9;
+  }
+
+  button:disabled {
+    background: #333;
+    color: #777;
+    cursor: not-allowed;
+  }
+
+  .button-row,
+  .copy-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  #result,
+  .result,
+  .output {
+    margin-top: 25px;
+    padding: 18px;
+    background: #171722;
+    border: 1px solid #333;
+    border-radius: 14px;
+    color: white;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 34px;
     }
 
-    body {
-      margin: 0;
-      background: #0f0f14;
-      color: white;
+    .button-row,
+    .copy-buttons {
+      grid-template-columns: 1fr;
     }
-
-    .container {
-      max-width: 950px;
-      margin: auto;
-      padding: 30px 18px;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 35px 10px;
-    }
-
-    .hero h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      color: #c7c7c7;
-      font-size: 18px;
-    }
-
-    .card {
-      background: #181820;
-      border: 1px solid #2d2d38;
-      border-radius: 18px;
-      padding: 22px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-    }
-
-    label {
-      display: block;
-      margin-top: 16px;
-      margin-bottom: 7px;
-      color: #eeeeee;
-      font-weight: bold;
-    }
-
-    textarea,
-    select,
-    input {
-      width: 100%;
-      padding: 13px;
-      border-radius: 12px;
-      border: 1px solid #333344;
-      background: #101018;
-      color: white;
-      outline: none;
-      font-size: 15px;
-    }
-
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    button {
-      margin-top: 22px;
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #ff3d7f, #7c4dff);
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    .output {
-      margin-top: 25px;
-      background: #101018;
-      border: 1px solid #333344;
-      border-radius: 18px;
-      padding: 20px;
-      white-space: pre-wrap;
-      line-height: 1.6;
-      color: #f1f1f1;
-      min-height: 120px;
-    }
-    .result-card {
-  background: #181820;
-  border: 1px solid #333344;
-  border-radius: 16px;
-  padding: 14px;
-  margin-bottom: 12px;
-}
-
-.result-card h3 {
-  margin: 0 0 10px 0;
-  font-size: 18px;
-  color: #ffffff;
-}
-
-.result-card p {
-  margin: 0;
-  white-space: pre-wrap;
-  line-height: 1.5;
-  color: #e8e8e8;
-}
-
-    .footer {
-      text-align: center;
-      margin-top: 25px;
-      color: #999;
-      font-size: 14px;
-    }
-
-    @media (max-width: 700px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 32px;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 
 <body>
