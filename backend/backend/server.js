@@ -84,6 +84,7 @@ Rules:
 - Do not use markdown bold symbols like **.
 - Do not use backticks.
 - Keep section numbers exactly 1 to 7.
+- Do not include hashtags inside Best Caption or Short Captions. Put hashtags only in section 3.
 - Make it natural, trendy and social-media friendly.
 - If image is available, use image details strongly.
 - If both image and text are given, combine both.
