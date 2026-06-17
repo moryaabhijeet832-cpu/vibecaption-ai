@@ -138,7 +138,6 @@
       <textarea id="photoIdea" placeholder="Example: Luxury cafe photo, black outfit, confident entrepreneur vibe"></textarea>
 <label>Upload Photo (optional)</label>
 <input type="file" id="photoFile" accept="image/*" onchange="handleImageUpload(event)" />
-
 <div id="imagePreviewBox" style="display:none; margin-top: 12px;">
   <img
     id="imagePreview"
@@ -206,8 +205,7 @@
   </div>
 
   <script>
-    
-const API_URL = "https://vibecaption-ai.onrender.com";
+    const API_URL = "https://vibecaption-ai.onrender.com";
     let uploadedImageBase64 = "";
 let uploadedImageMimeType = "";
 
