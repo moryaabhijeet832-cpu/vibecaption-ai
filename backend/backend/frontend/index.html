@@ -106,6 +106,26 @@
       color: #f1f1f1;
       min-height: 120px;
     }
+    .result-card {
+  background: #181820;
+  border: 1px solid #333344;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.result-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.result-card p {
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: #e8e8e8;
+}
 
     .footer {
       text-align: center;
@@ -263,6 +283,42 @@
     document.getElementById("imagePreview").src = "";
     document.getElementById("imagePreviewBox").style.display = "none";
   }
+   function escapeHtml(text) {
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function formatResult(result) {
+  const matches = [...result.matchAll(/(?:^|\n)([1-7])\.\s*([^\n]+)/g)];
+
+  if (matches.length === 0) {
+    return `<div class="result-card"><p>${escapeHtml(result)}</p></div>`;
+  }
+
+  let html = "";
+
+  matches.forEach((match, index) => {
+    const sectionNumber = match[1];
+    const sectionTitle = match[2].trim();
+    const startIndex = match.index + match[0].length;
+    const endIndex = matches[index + 1] ? matches[index + 1].index : result.length;
+
+    const sectionContent = result.slice(startIndex, endIndex).trim();
+
+    html += `
+      <div class="result-card">
+        <h3>${sectionNumber}. ${escapeHtml(sectionTitle)}</h3>
+        <p>${escapeHtml(sectionContent)}</p>
+      </div>
+    `;
+  });
+
+  return html;
+}        
 
   async function generateContent() {
   const output = document.getElementById("output");
@@ -311,7 +367,7 @@ generateBtn.style.opacity = "0.7";
   return;
 }
 
-      output.textContent = data.result;
+      output.innerHTML = formatResult(data.result);
       generateBtn.textContent = "Generate Content";
 generateBtn.disabled = false;
 generateBtn.style.opacity = "1";
