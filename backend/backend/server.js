@@ -86,6 +86,7 @@ Rules:
 - Keep section numbers exactly 1 to 7.
 - Do not include hashtags inside Best Caption or Short Captions. Put hashtags only in section 3.
 - In Song Suggestions, include song name with artist/singer name when possible.
+- Never include any hashtag in sections 1, 2, 4, 5, 6, or 7.
 - Make it natural, trendy and social-media friendly.
 - If image is available, use image details strongly.
 - If both image and text are given, combine both.
